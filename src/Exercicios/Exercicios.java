@@ -9,7 +9,6 @@
  * @author 00098519
  */
 package Exercicios;
-import Exercicios.conta;
 
 public class Exercicios {
     public static void main(String[] args){
@@ -26,12 +25,16 @@ public class Exercicios {
         c1.recuperaDadosParaImpressao();
         System.out.println(c1.recuperaDadosParaImpressao());
         
+        System.out.println(c1.getIdentificador());
+        
         conta c2 = new conta();
         c2.NomeTitular = "Daniel";
         c2.Numero = 321;
         c2.Agencia = "98765-4";
         c2.Saldo = 1000.0;
         c2.DataAbertura = c3;
+        
+        System.out.println(c2.getIdentificador());
         
         if(c1 == c2){
             System.out.println("Iguais");

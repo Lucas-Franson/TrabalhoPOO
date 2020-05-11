@@ -16,6 +16,23 @@ public class conta {
    public String Agencia;
    public double Saldo;
    public data DataAbertura;
+   private static int totalContas;
+   private int identificador;
+   
+   public conta(){
+        totalContas++;
+        this.identificador = totalContas;
+   }
+   public conta(String _nomeTitular){
+       this.NomeTitular = _nomeTitular;
+        totalContas++;
+        this.identificador = totalContas;
+   }
+   
+   //identificador unico
+    public int getIdentificador() {
+        return identificador;
+    }
    
    public double Saca(double Valor){
        return Saldo - Valor;
