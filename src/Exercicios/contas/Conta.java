@@ -1,16 +1,6 @@
-package Exercicios;
+package Exercicios.contas;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author 00098519
- */
-public class conta {
+public abstract class Conta {
    public String NomeTitular;
    public int Numero;
    public String Agencia;
@@ -19,26 +9,44 @@ public class conta {
    private static int totalContas;
    private int identificador;
    
-   public conta(){
+   public Conta(){
+        this.DataAbertura = new data();
+        
         totalContas++;
         this.identificador = totalContas;
    }
-   public conta(String _nomeTitular){
-       this.NomeTitular = _nomeTitular;
+
+    public Conta( String _nomeTitular,int _numeroConta, String _agencia){
+        this.DataAbertura = new data();
+        this.NomeTitular = _nomeTitular;
+        this.Numero = _numeroConta;
+        this.Agencia = _agencia;
+        this.Saldo = 0;
+        
         totalContas++;
         this.identificador = totalContas;
-   }
+    }
    
    //identificador unico
     public int getIdentificador() {
         return identificador;
     }
    
-   public double Saca(double Valor){
-       return Saldo - Valor;
+   public double Saca(double _valor){
+       if( this.Saldo - _valor >= 0 ){
+            this.Saldo -= _valor;
+            return this.Saldo;
+       }
+       else{
+           throw new SaldoInsuficienteException("Saldo Insuficiente");
+       }
    }
-   public double Deposita(double Valor){
-       this.Saldo = this.Saldo + Valor;
+   public double Deposita(double _valor){
+       
+       if( _valor <= 0.0 ){
+           throw new IllegalArgumentException("Valor Negativo!");
+       }
+       this.Saldo +=  _valor;
        return this.Saldo;
    }
    public double CalculaRendimento(){
@@ -53,10 +61,15 @@ public class conta {
        //dados += "\nDia: " + this.DataAbertura.dia;
        //dados += "\nMês: " + this.DataAbertura.mes;
        //dados += "\nAno: " + this.DataAbertura.ano;
-       dados += "\nData de abertura: " + this.DataAbertura.formatada();
+       dados += "\nData de abertura: " + this.DataAbertura.getDate();
        //Quando é executado sem valores o dia, mes e ano, é atribuído zero.
        dados += "\nCálculo do Rendimento Mensal: " + this.CalculaRendimento();
        return dados;
    }
+   
+   public String getTipo(){
+       return this.getClass().getSimpleName();
+   }
+   
 }
  
