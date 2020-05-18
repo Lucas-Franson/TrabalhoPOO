@@ -45,6 +45,11 @@ public class Main {
             // OPERACOES BANCARIAS
             if(select == 2){
                 System.out.println("=============== ACESSO A CONTA  ===============");
+                
+                System.out.println("Informe seu número da conta: ");
+                int conta = Integer.parseInt(scan.nextLine());
+                
+                banco.AcessarConta(conta);
             }
             
         }while(select != 0);

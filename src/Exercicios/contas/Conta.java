@@ -71,5 +71,15 @@ public abstract class Conta {
        return this.getClass().getSimpleName();
    }
    
+   public void transferir(Conta conta, double _valor) {
+       if (this.Saldo >= _valor) {
+           this.Saldo -= _valor;
+           conta.Deposita(_valor);
+           System.out.println("Transferência efetuada com sucesso!");
+       } else {
+           throw new SaldoInsuficienteException("Saldo Insuficiente");
+       }
+   }
+   
 }
  

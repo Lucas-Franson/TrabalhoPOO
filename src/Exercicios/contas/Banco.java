@@ -39,7 +39,7 @@ public class Banco {
         System.out.print("Numero da conta: \n");
         int numConta = Integer.parseInt(scan.nextLine());
         
-        while( this.getConta(numConta) != null ){
+        while( !this.getConta(numConta).equals(Optional.empty()) ){
             System.out.print("Numero da conta: \n");
             numConta = Integer.parseInt(scan.nextLine());
         }
@@ -62,6 +62,68 @@ public class Banco {
        
       this.Contas.removeIf( obj -> obj.Numero == _numero );
       
+   }
+   
+   public void AcessarConta(int conta) {
+       
+       if (!this.getConta(conta).equals(Optional.empty())) {
+        Conta account = this.getConta(conta).get();
+        
+        System.out.println("=============== OPERAÇÕES NA CONTA  ===============");    
+        System.out.println("-- Sacar (1)");
+        System.out.println("-- Depositar (2)");
+        System.out.println("-- Imprimir extrato (3)");
+        System.out.println("-- Tipo da conta (4)");
+        System.out.println("-- Transferir dinheiro (5)");
+
+        int operacao = Integer.parseInt(scan.nextLine());
+
+        switch(operacao) {
+            case 1:
+                System.out.println("Informe o valor para saque:");
+                double saque = Double.parseDouble(scan.nextLine());
+                account.Saca(saque);
+                break;
+            case 2:
+                System.out.println("Informe o valor para deposito:");
+                double deposito = Double.parseDouble(scan.nextLine());
+                account.Deposita(deposito);
+                break;
+            case 3:
+                System.out.println(account.recuperaDadosParaImpressao());
+                break;
+            case 4:
+                System.out.println(account.getTipo());
+                break;
+            case 5:
+                this.transferir(account);
+                break;
+            default:
+                System.out.println("Não existe operação com esse número.");
+                break;
+        }
+       
+       } else {
+           System.out.println("Não existe conta com esse número.");
+       }
+       
+   }
+   
+   private void transferir(Conta account) {
+        System.out.println("Informe o número da conta para transferência:");
+        int contaReceptor = Integer.parseInt(scan.nextLine());
+        Optional<Conta> receptor = this.getConta(contaReceptor);
+        
+        while( receptor.equals(Optional.empty()) ){
+            System.out.print("Numero da conta para transferência: \n");
+            int numConta = Integer.parseInt(scan.nextLine());
+            receptor = this.getConta(numConta);
+        }
+        
+        System.out.println("Informe o valor para transferência: ");
+        double valor = Double.parseDouble(scan.nextLine());
+        
+        account.transferir(receptor.get(), valor);
    }
    
 }
